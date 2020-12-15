@@ -21,7 +21,7 @@ Find the function to predict <img src="https://render.githubusercontent.com/rend
 	- Linear Regression:
 	<img src="https://render.githubusercontent.com/render/math?math=Cost%28%5Cwidehat%7By%7D%2C%20y%29%20%3D%20%5Cfrac%7B1%7D%7B2%7D%28%5Cwidehat%7By%7D-y%29%5E2">
 	- Logistic Regression:
-	<img src="https://render.githubusercontent.com/render/math?mode=inline&math=Cost%28%5Cwidehat%7By%7D%2C%20y%29%20%3D%20-ylog%5Cwidehat%7By%7D%20-%20%281-y%29log%281%20-%20%5Cwidehat%7By%7D%29">
+	<img src="https://render.githubusercontent.com/render/math?math=Cost%28%5Cwidehat%7By%7D%2C%20y%29%20%3D%20-ylog%5Cwidehat%7By%7D%20-%20%281-y%29log%281%20-%20%5Cwidehat%7By%7D%29">
 - <img src="https://render.githubusercontent.com/render/math?mode=inline&math=%5Cwidehat%7By%7D%20%3D%20h_%5Ctheta%28x%29"> : predicted value.
 - <img src="https://render.githubusercontent.com/render/math?mode=inline&math=h_%5Ctheta%28x%29"> : hypothesis function. Its formula depends on the type of problem.
 	- Linear Regression:
