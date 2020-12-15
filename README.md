@@ -30,18 +30,14 @@
 	- Training generator and discriminator networks
 	- Generating fake digits & anime faces with GANs
 	
-## Test Math
+## Write Math Formula
 
-In line formula $`\sqrt{2}`$
-
-Block formula
-
-```math
-SE = \frac{\sigma}{\sqrt{n}}
+```
+<img src="https://render.githubusercontent.com/render/math?mode=inline&math=your_url_encoded_formula>
 ```
 
-Latex render
+- Online Latex Equation Editor: https://www.codecogs.com/latex/eqneditor.php
+- URL Encode & Decode: https://www.urlencoder.org/
 
-<img src="https://latex.codecogs.com/gif.latex?P%28s%20%7C%20O_t%20%29%3D%5Ctext%20%7B%20Probability%20of%20a%20sensor%20reading%20value%20when%20sleep%20onset%20is%20observed%20at%20a%20time%20bin%20%7D%20t%20" />
-
+Example: 
 Given the training set <img src="https://render.githubusercontent.com/render/math?mode=inline&math=%28x%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29_%7Bi%3D1%7D%5Em">
