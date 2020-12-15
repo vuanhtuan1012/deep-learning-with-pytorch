@@ -29,3 +29,13 @@
 	- Generative modeling and applications of GANs
 	- Training generator and discriminator networks
 	- Generating fake digits & anime faces with GANs
+	
+## Test Math
+
+In line formula $`\sqrt{2}`$
+
+Block formula
+
+```math
+SE = \frac{\sigma}{\sqrt{n}}
+```
