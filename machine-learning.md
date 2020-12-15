@@ -32,3 +32,11 @@ Find the function to predict <img src="https://render.githubusercontent.com/rend
 -
 	- Logistic Regression:
 	<p align="center"><img src="https://render.githubusercontent.com/render/math?math=h_%5Ctheta%28x%29%20%3D%20%5Cfrac%7B1%7D%7B1%20%2B%20e%5E%7B-%5CTheta%5ETX%7D%7D"></p>
+
+- <img src="https://render.githubusercontent.com/render/math?mode=inline&math=X"> : feature vector
+- <img src="https://render.githubusercontent.com/render/math?mode=inline&math=%5CTheta"> : parameter vector
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=X%20%3D%20%5Cbegin%7Bbmatrix%7D%0Ax_0%5C%5C%20%0Ax_1%5C%5C%20%0A%5Cvdots%5C%5C%20%0Ax_n%0A%5Cend%7Bbmatrix%7D">
+<img src="https://render.githubusercontent.com/render/math?math=%5CTheta%20%3D%20%5Cbegin%7Bbmatrix%7D%0A%5Ctheta_0%5C%5C%20%0A%5Ctheta_1%5C%5C%20%0A%5Cvdots%5C%5C%20%0A%5Ctheta_n%0A%5Cend%7Bbmatrix%7D"></p>
+
+- <img src="https://render.githubusercontent.com/render/math?mode=inline&math=n"> : number of features.
