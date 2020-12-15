@@ -76,7 +76,6 @@ Find the function to predict <img src="https://render.githubusercontent.com/rend
 <img src="https://render.githubusercontent.com/render/math?math=h_%5Ctheta%28x%29%20%3D%20%5CTheta%5ETX">
 </p>
 
--
 	- Logistic Regression:
 <p align="center">
 <img src="https://render.githubusercontent.com/render/math?math=h_%5Ctheta%28x%29%20%3D%20%5Cfrac%7B1%7D%7B1%20%2B%20e%5E%7B-%5CTheta%5ETX%7D%7D">
