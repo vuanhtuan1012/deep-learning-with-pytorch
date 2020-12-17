@@ -55,9 +55,9 @@ Given the training set <img src="https://render.githubusercontent.com/render/mat
 t1 = torch.tensor(4.)  # single number
 t2 = torch.tensor([1, 2, 3, 4])  # vector
 t3 = torch.tensor([[5, 6]
-				   [7, 8],
-				   [9, 10]
-				  ])  # matrix
+                   [7, 8],
+                   [9, 10]
+                 ])  # matrix
 ```
 - Tensor attributes:
 	- `t.dtype` : the type of a tensor like `float32`, `double64`, etc.
@@ -91,8 +91,8 @@ print('dy/db = ', b.grad)
 - Convert a Numpy array to a PyTorch tensor, using `torch.from_numpy`
 ```
 x = np.array([[1, 2],
-			  [3, 4]
-			])
+              [3, 4]
+            ])
 y = torch.from_numpy(x)
 type(x), type(y)
 ```
