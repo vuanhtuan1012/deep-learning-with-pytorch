@@ -42,8 +42,62 @@
 Example:
 
 ```
-Given the training set <img src="https://render.githubusercontent.com/render/math?mode=inline&math=%28x%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29_%7Bi%3D1%7D%5Em">
+Given the training set <img src="https://render.githubusercontent.com/render/math?math=%28x%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29_%7Bi%3D1%7D%5Em">
 ```
 
-Given the training set <img src="https://render.githubusercontent.com/render/math?mode=inline&math=%28x%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29_%7Bi%3D1%7D%5Em">
+Given the training set <img src="https://render.githubusercontent.com/render/math?math=%28x%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29_%7Bi%3D1%7D%5Em">
 
+## PyTorch Basic
+
+### Tensor
+- Create a tensor
+```Python
+t1 = torch.tensor(4.)  # single number
+t2 = torch.tensor([1, 2, 3, 4])  # vector
+t3 = torch.tensor([[5, 6]
+				   [7, 8],
+				   [9, 10]
+				  ])  # matrix
+```
+- Tensor attributes:
+	- `t.dtype` : the type of a tensor like `float32`, `double64`, etc.
+	- `t.shape` : the size of a tensor like `torch.Size([4])`, `torch.Size([3, 2])`
+
+### Tensor operations and gradients
+
+1. Operations
+```Python
+x = torch.tensor(3.)
+w = torch.tensor(4., requires_grad = True)
+b = torch.tensor(5., requires_grad = True)
+y = w*x + b
+```
+- `requires_grad = True` to set that we will compute <img src="https://render.githubusercontent.com/render/math?math=%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%20w%7Dy" align="middle"> and <img src="https://render.githubusercontent.com/render/math?math=%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%20b%7Dy" align="middle">
+
+2. Compute gradients
+```Python
+y.backward()
+print('dy/dx = ', x.grad)
+print('dy/dw = ', w.grad)
+print('dy/db = ', b.grad)
+```
+- `y.backward()` : computes the derivatives of `y` with respect to the input tensors `x, w, b`.
+- the tensor attribute `grad` stores the derivative of `y` of the respective tensors.
+	- `x.grad` stores <img src="https://render.githubusercontent.com/render/math?math=%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%20x%7Dy" align="middle">. In this case, it is `None` since `x` doesn't have `requires_grad = True`
+	- `w.grad` stores <img src="https://render.githubusercontent.com/render/math?math=%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%20w%7Dy" align="middle">. In this case, it is the value of `x`, `tensor(3.)`.
+	- `b.grad` stores <img src="https://render.githubusercontent.com/render/math?math=%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%20b%7Dy" align="middle">. In this case, it is `tensor(1.)`
+
+3. Interoperability with Numpy
+- Convert a Numpy array to a PyTorch tensor, using `torch.from_numpy`
+```
+x = np.array([[1, 2],
+			  [3, 4]
+			])
+y = torch.from_numpy(x)
+type(x), type(y)
+```
+- Convert a tensor to a numpy, using the method `numpy`
+```
+z = y.numpy()
+type(z)
+```
