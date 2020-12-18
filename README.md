@@ -89,7 +89,7 @@ print('dy/db = ', b.grad)
 
 3. Interoperability with Numpy
 - Convert a Numpy array to a PyTorch tensor, using `torch.from_numpy`
-```
+```Python
 x = np.array([[1, 2],
               [3, 4]
             ])
@@ -97,7 +97,7 @@ y = torch.from_numpy(x)
 type(x), type(y)
 ```
 - Convert a tensor to a numpy, using the method `numpy`
-```
+```Python
 z = y.numpy()
 type(z)
 ```
