@@ -225,6 +225,7 @@ dataloader = DataLoader(dataset, batch_size, shuffle=True)
 for x, y in dataloader:
 	print(x, y)
 ```
+- **The idea of data loader** is that if the dataset is big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we shuffle and devide the dataset into batches and at each epoch, we train only one batch.
 
 #### Define functions
 ##### Hypothesis function (model)
