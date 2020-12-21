@@ -218,14 +218,14 @@ dataloader = DataLoader(dataset, batch_size, shuffle=True)
 - `TensorDataset` returns a tuple of two elements in which the first one contains the inputs and the second one contains the outputs.
 	- Allow to access a small section of the dataset using the array indexing notation.
 - `DataLoader` splits the dataset into batches of a predefined size while training.
-	- `batch_size` indicates how many samples in a batch. For example, if `dataset)` contains `15` samples and `batch_size = 5`, `dataloader` will point to `3` batches, each batch contain `5` samples.
+	- `batch_size` indicates how many samples in a batch. For example, if `dataset` contains `15` samples and `batch_size = 5`, `dataloader` will point to `3` batches, each batch contain `5` samples.
 	- `shuffle=True` means the dataset will be shuffled before creating batches. It helps randomize the input to the optimization algorithm, leading to a faster reduction in the loss.
 	- Access the elements of data loader by using `for` loop.
 ```Python
 for x, y in dataloader:
 	print(x, y)
 ```
-- **The idea of data loader** is that if the dataset is big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each epoch, we train only one batch. We need some (`len(dataset)/batch_size`) epochs to train whole dataset.
+- **The idea of data loader** is that if the dataset is too big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each epoch, we train only one batch. We need some (`len(dataset)/batch_size`) epochs to train the whole dataset.
 
 #### Define functions
 ##### Hypothesis function (model)
