@@ -222,8 +222,10 @@ dataloader = DataLoader(dataset, batch_size, shuffle=True)
 	- `shuffle=True` means the dataset will be shuffled before creating batches. It helps randomize the input to the optimization algorithm, leading to a faster reduction in the loss.
 	- Access the elements of data loader by using `for` loop.
 ```Python
-for x, y in dataloader:
-	print(x, y)
+for batch in dataloader:
+	print(batch)
+	xs, ys = batch
+	print(xs); print(ys)
 ```
 - **The idea of data loader** is that if the dataset is too big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each epoch, we train only one batch. We need some (`len(dataset)/batch_size`) epochs to train the whole dataset.
 
