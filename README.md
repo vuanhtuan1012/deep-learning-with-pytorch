@@ -227,7 +227,7 @@ for batch in dataloader:
     xs, ys = batch
     print(xs); print(ys)
 ```
-- **The idea of data loader** is that if the dataset is too big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each batch iteraton (`for batch in dataloader`), we only train samples one batch. We need some (`len(dataset)/batch_size`) iterations to train the whole dataset.
+- **The idea of data loader** is that if the dataset is too big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each batch iteraton (`for batch in dataloader`), we only train samples in one batch. We need some (`len(dataset)/batch_size`) iterations to train the whole dataset.
 
 #### Define functions
 ##### Hypothesis function (model)
@@ -264,7 +264,8 @@ opt = torch.optim.SGD(model.parameters(), lr=1e-5)
 ```Python
 def fit(epochs, model, cost_fn, opt, dataloader):
     for i in range(epochs):
-        for xs, ys in dataloader:
+        for batch in dataloader:
+            xs, ys = batch
             ys_hat = model(xs)
             cost = cost_fn(ys_hat, ys)
             cost.backward()
