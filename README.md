@@ -227,7 +227,7 @@ for batch in dataloader:
     xs, ys = batch
     print(xs); print(ys)
 ```
-- **The idea of data loader** is that if the dataset is too big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each epoch, we train only one batch. We need some (`len(dataset)/batch_size`) epochs to train the whole dataset.
+- **The idea of data loader** is that if the dataset is too big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each batch iteraton (`for batch in dataloader`), we only train samples one batch. We need some (`len(dataset)/batch_size`) iterations to train the whole dataset.
 
 #### Define functions
 ##### Hypothesis function (model)
