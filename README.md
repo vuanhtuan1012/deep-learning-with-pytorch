@@ -283,3 +283,162 @@ x = torch.tensor([[75, 63, 44.]])
 y_hat = model(x)
 print(y_hat.tolist())
 ```
+
+## Logistic Regression
+
+This section mentions how to create an application to classify handwritten digits. We will use the famous [MNIST handwritten digit database](http://yann.lecun.com/exdb/mnist/) as our training dataset. It consists of 28 x 28 pixels grayscale images of handwritten digits (0 to 9) and labels for each image indicating which digit it represents.
+
+Here are some sample images from the dataset:
+<p align="center">
+<img src="images/mnist_samples.png"/>
+</p>
+
+(image source: [researchgate.net](https://www.researchgate.net/publication/306056875_An_analysis_of_image_storage_systems_for_scalable_training_of_deep_neural_networks))
+
+### Workflow
+<p align="center">
+<img src="images/logistic_regression.svg"/>
+</p>
+
+### Libararies
+```Python
+import torch
+import torchvision
+from torchvision.datasets import MNIST
+import torchvision.transforms as transforms
+from torch.utils.data import random_split
+from torch.utils.data import DataLoader
+import torch.nn as nn
+import torch.nn.functional as F
+import matplotlib.pyplot as plt
+```
+
+### Convert train & test images to tensors
+
+```Python
+dataset = MNIST(root='data/', train=True, transform=transforms.ToTensor(), download=True)
+test_ds = MNIST(root='data/', train=False, transform=transforms.ToTensor())
+```
+- the first line will download images from [MNIST handwritten digit database](http://yann.lecun.com/exdb/mnist/) to the directory `data` and create a Pytorch `dataset`. This dataset contains 60 000 images. We will use this dataset to train the model.
+- the second line will create a Pytorch `dataset` containing 10 000 images. We use this dataset to evaluate models. We don't need to download images since they're already downloaded.
+
+### Split train images to train & validation sets
+```Python
+data_size = len(dataset)
+train_size = round(data_size*0.8)
+val_size = data_size - train_size
+train_ds, val_ds = random_split(dataset, [train_size, val_size])
+```
+- the PyTorch method `random_split` choose a random sample of size `val_size` for creating a validation dataset, and a random sample of size `train_size` for creating a training dataset. There's no ntersection sample of these two datasets.
+
+### Define batch size and dataloaders
+```Python
+batch_size = 128
+train_loader = DataLoader(train_ds, batch_size, shuffle=True)
+val_loader = DataLoader(val_ds, batch_size*2)
+test_loader = DataLoader(test_ds, batch_size*2)
+```
+
+### Define functions
+
+In this section we create four functions:
+- `forward()` is to compute linear outputs from tensor inputs. This output is used as input of other functions.
+- `predict()` is to predict label from a linear output.
+- `cost()` is to measure the difference between predicted and real label.
+- `evaluate()` is to evaluate model on validation dataset. It computes cost and accuracy.
+
+```Python
+class MnistModel(nn.Module):
+	def __init__(self):
+		super().__init__()
+		self.linear = nn.Linear(in_features, out_classes)
+	
+	def forward(self, X):
+		X = X.reshape(-1, self.linear.in_features)
+		Y_linear = self.linear(X)
+		return Y_linear
+	
+	# predict label
+	def predict(self, X):
+		Y_linear = self(X)
+		probs = F.softmax(Y_linear.detach(), dim=1)
+		_, Y_hat = torch.max(probs, dim=1)
+		return Y_hat
+```
+- the method `reshape()` indicates to PyTorch that we want a view of X with two dimensions. The first dimension `-1`  let PyTorch figure it out automatically based on the shape of the original tensor.
+- `self(X)` will call the method `forward()`. Therefore, its result is the result of `self.forward(X)`
+- the function `F.softmax()` convert the results of linear computations into probabilities.
+- the function `torch.max()` returns each row's largest element and the corresponding index. `dim=1` indicates to PyTorch that we want to find maximal values based on rows.
+- the method `detach()` indicates PyTorch disables automatic differentiation.
+
+```Python	
+# compute cost
+def cost(self, batch):
+	images, labels = batch
+	Y_linear = self(images)
+	cost = F.cross_entropy(Y_linear, labels)
+	return cost
+```
+- the function `cross_entropy()` is a continuous and differentiable function. **It performs `softmax` internally**, so we can directly pass the `Y_linear` into this function without converting them into probabilities.
+
+```Python	
+# evaluate a batch
+def evaluate(self, batch):
+	images, labels = batch
+	Y_hat = self.predict(images)
+	acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
+	Y_linear = self(images)
+	cost = F.cross_entropy(Y_linear.detach(), labels).item()
+	res = {
+		'cost': cost,
+		'accuracy': acc
+	}
+	return res
+```
+- `torch.sum(Y_hat == labels)` computes the number of right prediction.
+
+### Training Phase
+<p align="center">
+<img src="images/logistic_regression_training.svg"/>
+</p>
+
+```Python	
+# evaluate a batch
+for batch in train_loader:
+	cost = model.cost(batch)  # compute cost
+	cost.backward()  # compute gradients
+	optimizer.step()  # update parameters
+	optimizer.zero_grad()  # reset gradients to zero
+```
+
+### Validation Phase
+<p align="center">
+<img src="images/logistic_regression_validation.svg"/>
+</p>
+
+```Python	
+# evaluate a batch
+def evaluate(self, batch):
+	images, labels = batch
+	Y_hat = self.predict(images)
+	acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
+	Y_linear = self(images)
+	cost = F.cross_entropy(Y_linear.detach(), labels).item()
+	res = {
+		'cost': cost,
+		'accuracy': acc
+	}
+	return res
+```
+
+### Save model
+```Python	
+filename = 'mnist_logistic.pth'
+torch.save(model.state_dict(), filename)
+```
+- the method `state_dict()` returns an `OrderedDict` containing all the weights and bias matrices mapped to the right attributes of the model.
+- to load the model we can instantiate a new object of the class `MnistModel` and use the method `load_state_dict()`
+```Python	
+model2 = MnistModel(in_features, out_classes)
+model2.load_state_dict(torch.load(filename))
+```
