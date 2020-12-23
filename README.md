@@ -349,21 +349,21 @@ In this section we create four functions:
 
 ```Python
 class MnistModel(nn.Module):
-	def __init__(self):
-		super().__init__()
-		self.linear = nn.Linear(in_features, out_classes)
-	
-	def forward(self, X):
-		X = X.reshape(-1, self.linear.in_features)
-		Y_linear = self.linear(X)
-		return Y_linear
-	
-	# predict label
-	def predict(self, X):
-		Y_linear = self(X)
-		probs = F.softmax(Y_linear.detach(), dim=1)
-		_, Y_hat = torch.max(probs, dim=1)
-		return Y_hat
+    def __init__(self):
+        super().__init__()
+        self.linear = nn.Linear(in_features, out_classes)
+    
+    def forward(self, X):
+        X = X.reshape(-1, self.linear.in_features)
+        Y_linear = self.linear(X)
+        return Y_linear
+    
+    # predict label
+    def predict(self, X):
+        Y_linear = self(X)
+        probs = F.softmax(Y_linear.detach(), dim=1)
+        _, Y_hat = torch.max(probs, dim=1)
+        return Y_hat
 ```
 - the method `reshape()` indicates to PyTorch that we want a view of X with two dimensions. The first dimension `-1`  let PyTorch figure it out automatically based on the shape of the original tensor.
 - `self(X)` will call the method `forward()`. Therefore, its result is the result of `self.forward(X)`
@@ -371,29 +371,29 @@ class MnistModel(nn.Module):
 - the function `torch.max()` returns each row's largest element and the corresponding index. `dim=1` indicates to PyTorch that we want to find maximal values based on rows.
 - the method `detach()` indicates PyTorch disables automatic differentiation.
 
-```Python	
+```Python
 # compute cost
 def cost(self, batch):
-	images, labels = batch
-	Y_linear = self(images)
-	cost = F.cross_entropy(Y_linear, labels)
-	return cost
+    images, labels = batch
+    Y_linear = self(images)
+    cost = F.cross_entropy(Y_linear, labels)
+    return cost
 ```
 - the function `cross_entropy()` is a continuous and differentiable function. **It performs `softmax` internally**, so we can directly pass the `Y_linear` into this function without converting them into probabilities.
 
-```Python	
+```Python
 # evaluate a batch
 def evaluate(self, batch):
-	images, labels = batch
-	Y_hat = self.predict(images)
-	acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
-	Y_linear = self(images)
-	cost = F.cross_entropy(Y_linear.detach(), labels).item()
-	res = {
-		'cost': cost,
-		'accuracy': acc
-	}
-	return res
+    images, labels = batch
+    Y_hat = self.predict(images)
+    acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
+    Y_linear = self(images)
+    cost = F.cross_entropy(Y_linear.detach(), labels).item()
+    res = {
+        'cost': cost,
+        'accuracy': acc
+    }
+    return res
 ```
 - `torch.sum(Y_hat == labels)` computes the number of right prediction.
 
@@ -402,13 +402,13 @@ def evaluate(self, batch):
 <img src="images/logistic_regression_training.svg"/>
 </p>
 
-```Python	
+```Python
 # evaluate a batch
 for batch in train_loader:
-	cost = model.cost(batch)  # compute cost
-	cost.backward()  # compute gradients
-	optimizer.step()  # update parameters
-	optimizer.zero_grad()  # reset gradients to zero
+    cost = model.cost(batch)  # compute cost
+    cost.backward()  # compute gradients
+    optimizer.step()  # update parameters
+    optimizer.zero_grad()  # reset gradients to zero
 ```
 
 ### Validation Phase
@@ -416,29 +416,29 @@ for batch in train_loader:
 <img src="images/logistic_regression_validation.svg"/>
 </p>
 
-```Python	
+```Python
 # evaluate a batch
 def evaluate(self, batch):
-	images, labels = batch
-	Y_hat = self.predict(images)
-	acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
-	Y_linear = self(images)
-	cost = F.cross_entropy(Y_linear.detach(), labels).item()
-	res = {
-		'cost': cost,
-		'accuracy': acc
-	}
-	return res
+    images, labels = batch
+    Y_hat = self.predict(images)
+    acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
+    Y_linear = self(images)
+    cost = F.cross_entropy(Y_linear.detach(), labels).item()
+    res = {
+        'cost': cost,
+        'accuracy': acc
+    }
+    return res
 ```
 
 ### Save model
-```Python	
+```Python
 filename = 'mnist_logistic.pth'
 torch.save(model.state_dict(), filename)
 ```
 - the method `state_dict()` returns an `OrderedDict` containing all the weights and bias matrices mapped to the right attributes of the model.
 - to load the model we can instantiate a new object of the class `MnistModel` and use the method `load_state_dict()`
-```Python	
+```Python
 model2 = MnistModel(in_features, out_classes)
 model2.load_state_dict(torch.load(filename))
 ```
