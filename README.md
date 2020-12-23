@@ -1,5 +1,7 @@
 # Deep Learning with PyTorch: Zero to GANs
 
+This is a summarization of the course [Deep Learning with PyTorch: Zero to GANs](https://jovian.ai/learn/deep-learning-with-pytorch-zero-to-gans) at Jovian.
+
 ## Syllabus
 
 1. **PyTorch Basics and Gradient Descent**
