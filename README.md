@@ -32,7 +32,7 @@ This is a summarization of the course [Deep Learning with PyTorch: Zero to GANs]
     - Generative modeling and applications of GANs
     - Training generator and discriminator networks
     - Generating fake digits & anime faces with GANs
-    
+
 ## Write Math Formula
 
 ```
@@ -112,6 +112,7 @@ This section mentions how to train a linear regression model in PyTorch in two w
 - from scratch, functions are built manually.
 - using PyTorch built-ins function.
 
+The notebook of this section is at [linear regression.ipynb](linear%20regression.ipynb).
 
 ### Linear Regression from scratch
 
@@ -292,6 +293,8 @@ print(y_hat.tolist())
 
 This section mentions how to create an application to classify handwritten digits. We will use the famous [MNIST handwritten digit database](http://yann.lecun.com/exdb/mnist/) as our training dataset. It consists of 28 x 28 pixels grayscale images of handwritten digits (0 to 9) and labels for each image indicating which digit it represents.
 
+The notebook of this section is at [logistic regression.ipynb](logistic%20regression.ipynb).
+
 Here are some sample images from the dataset:
 <p align="center">
 <img src="images/mnist_samples.png"/>
@@ -356,12 +359,12 @@ class MnistModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.linear = nn.Linear(in_features, out_classes)
-    
+
     def forward(self, X):
         X = X.reshape(-1, self.linear.in_features)
         Y_linear = self.linear(X)
         return Y_linear
-    
+
     # predict label
     def predict(self, X):
         Y_linear = self(X)
