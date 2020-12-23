@@ -2,6 +2,7 @@
 
 This is a summarization of the course [Deep Learning with PyTorch: Zero to GANs](https://jovian.ai/learn/deep-learning-with-pytorch-zero-to-gans) at Jovian.
 
+<!---
 ## Syllabus
 
 1. **PyTorch Basics and Gradient Descent**
@@ -49,6 +50,7 @@ Given the training set <img src="https://render.githubusercontent.com/render/mat
 
 Given the training set <img src="https://render.githubusercontent.com/render/math?math=%28x%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29_%7Bi%3D1%7D%5Em">
 
+--->
 ## PyTorch Basic
 
 ### Tensor
