@@ -407,7 +407,7 @@ def evaluate(self, batch):
 </p>
 
 ```Python
-# evaluate a batch
+# training phase
 for batch in train_loader:
     cost = model.cost(batch)  # compute cost
     cost.backward()  # compute gradients
@@ -428,11 +428,11 @@ def evaluate(self, batch):
     acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
     Y_linear = self(images)
     cost = F.cross_entropy(Y_linear.detach(), labels).item()
-    res = {
+    log = {
         'cost': cost,
         'accuracy': acc
     }
-    return res
+    return log
 ```
 
 ### Save model
