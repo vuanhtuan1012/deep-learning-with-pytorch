@@ -131,6 +131,7 @@ The notebook of this section is at [linear regression.ipynb](linear%20regression
 - [x] Initialize parameters: identify the number of samples, of features and of targets. Initialize *weights* and *bias* to predict target. Theses parameters will be optimized in training process.
 - [x] Define functions: create *hypothesis function* (model) to predict target from input, and *cost function* (loss function) to compute the difference between the prediction and the target.
 - [x] Train model: find the *optimal values* of the parameters (weights & bias) by using gradient descent algorithm.
+
 :warning: Make sure reset gradients to zero before the next iteration.
 - [x] Predict: using optimal parameters to predict target from a given input.
 
@@ -216,6 +217,7 @@ print(y_hat.tolist())
 </p>
 
 - [x] Convert inputs & targets to tensors: convert data (*inputs* & *targets*) from numpy arrays to tensors.
+
 :warning: Make sure that numpy arrays are in data type `float32`.
 - [x] Define dataset & dataloader:
     - dataset are tuples of inputs & targets.
@@ -225,6 +227,7 @@ print(y_hat.tolist())
     - set cost function is a mean squared loss function.
 - [x] Define optimizer: an optimizer is used to optimize model parameters by calling `step()` method. Set optimzer to use stochastic gradient descent algorithm.
 - [x] Train model: find the *optimal values* of model parameters by repeating the process of optimizing.
+
 :warning: Make sure reset gradients to zero before the next iteration.
 - [x] Predict: using optimal parameters to predict target from a given input.
 
