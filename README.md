@@ -2,9 +2,9 @@
 
 This is a summarization of the course [Deep Learning with PyTorch: Zero to GANs](https://jovian.ai/learn/deep-learning-with-pytorch-zero-to-gans) at Jovian.
 
-1. [PyTorch Basic](#pytorch-basic)
-2. [Linear Regression](#linear-regression)
-3. [Logistic Regression](#logistic-regression)
+1. [PyTorch Basic](#pytorch-basic): basic operators of PyTorch.
+2. [Linear Regression](#linear-regression): train a linear regression from scratch and using PyTorch built-ins function.
+3. [Logistic Regression](#logistic-regression): classify handwritten digits using MNIST handwritten digit database as training dataset.
 
 <!---
 ## Syllabus
