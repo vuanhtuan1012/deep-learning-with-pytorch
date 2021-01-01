@@ -2,6 +2,10 @@
 
 This is a summarization of the course [Deep Learning with PyTorch: Zero to GANs](https://jovian.ai/learn/deep-learning-with-pytorch-zero-to-gans) at Jovian.
 
+1. [PyTorch Basic](#pytorch-basic)
+2. [Linear Regression](#linear-regression)
+3. [Logistic Regression](#logistic-regression)
+
 <!---
 ## Syllabus
 
