@@ -112,9 +112,11 @@ type(z)
 
 ## Linear Regression
 
+> Linear Regression supposes that there's a linear relation between inputs and outputs (targets).
+
 This section mentions how to train a linear regression model in PyTorch in two ways:
-- from scratch, functions are built manually.
-- using PyTorch built-ins function.
+- [from scratch](#linear-regression-from-scratch), functions are built manually.
+- [using PyTorch built-ins function](#linear-regression-using-pytorch-built-ins).
 
 The notebook of this section is at [linear regression.ipynb](linear%20regression.ipynb).
 
@@ -124,6 +126,13 @@ The notebook of this section is at [linear regression.ipynb](linear%20regression
 <p align="center">
 <img src="images/linear_regression_from_scratch.svg"/>
 </p>
+
+- [x] Convert inputs & targets to tensors: convert data (*inputs* & *targets*) from numpy arrays to tensors.
+- [x] Initialize parameters: identify the number of samples, of features and of targets. Initialize *weights* and *bias* to predict target. Theses parameters will be optimized in training process.
+- [x] Define functions: create *hypothesis function* (model) to predict target from input, and *cost function* (loss function) to compute the difference between the prediction and the target.
+- [x] Train model: find the *optimal values* of the parameters (weights & bias) by using gradient descent algorithm.
+:warning: Make sure reset gradients to zero before the next iteration.
+- [x] Predict: using optimal parameters to predict target from a given input.
 
 #### Convert inputs & targets to tensors
 ```Python
@@ -148,7 +157,7 @@ b = torch.randn(a, requires_grad=True)  # bias
 
 #### Define functions
 ##### Hypothesis function (model)
-- predicts `y` from `x` and parameters `W, b`.
+Predicts `y` from `x` and parameters `W, b`.
 ```Python
 def model(X, W, b):
     Y_hat = X @ W.t() + b
@@ -158,7 +167,7 @@ def model(X, W, b):
  - the method `t()` returns the transpose of a tensor.
 
 ##### Cost function (loss function)
-- computes the difference between predicted values `Y_hat` and output values `Y`.
+Computes the difference between predicted values `Y_hat` and output values `Y`.
 ```Python
 def cost_fn(Y_hat, Y):
     diff = Y_hat - Y
@@ -167,7 +176,10 @@ def cost_fn(Y_hat, Y):
  - the function `torch.sum()`  returns the sum of all the elements in a tensor.
  - the method `numel()` returns the number of elements in a tensor.
 
-#### Train the model using gradient descent
+#### Train model
+:writing_hand: **Gradient Descent:** this algorithm repeats the process of adjusting the weights and biases using the gradients multiple times to reduce the loss.
+- Each iteration is called an **epoch**.
+
 ```Python
 epochs = 100  # number of iteration
 lr = 1e-5  # learning rate
@@ -182,8 +194,7 @@ for i in range(epochs):
         W.grad.zero_()
         b.grad.zero_()
 ```
-- **Algorithm:** we repeat the process of adjusting the weights and biases using the gradients multiple times to reduce the loss.
-- Each iteration is called an **epoch**.
+
 - the method `cost.backward()` computes the derivatives of `cost` with respect to `W` and `b`.
 - the function `torch.no_grad()` indicates to PyTorch that we shouldn't track, calculate, or modify gradients while updating parameters `W` and `b`
 - the method `grad.zero_()` resets the gradients to zero. As PyTorch accumulates gradients, we need to reset them before the next time we invoke  `backward()` on the loss.
@@ -203,6 +214,19 @@ print(y_hat.tolist())
 <p align="center">
 <img src="images/linear_regression_pytorch_built_ins.svg"/>
 </p>
+
+- [x] Convert inputs & targets to tensors: convert data (*inputs* & *targets*) from numpy arrays to tensors.
+:warning: Make sure that numpy arrays are in data type `float32`.
+- [x] Define dataset & dataloader:
+    - dataset are tuples of inputs & targets.
+    - dataloader shuffles the dataset and divides a dataset into batches.
+- [x] Define functions:
+    - identify the number of features and of targets, set model is a linear function.
+    - set cost function is a mean squared loss function.
+- [x] Define optimizer: an optimizer is used to optimize model parameters by calling `step()` method. Set optimzer to use stochastic gradient descent algorithm.
+- [x] Train model: find the *optimal values* of model parameters by repeating the process of optimizing.
+:warning: Make sure reset gradients to zero before the next iteration.
+- [x] Predict: using optimal parameters to predict target from a given input.
 
 #### Libraries
 ```Python
@@ -269,7 +293,7 @@ opt = torch.optim.SGD(model.parameters(), lr=1e-5)
 - the function `torch.optim.SGD` optimizes parameters which are passed in `model.parameters()` with the learning rate passed in the parameter `lr`.
 - `SGD` stands for *stochastic gradient descent*. The terms *stochastic* indicates that samples are selected in random batches instead of as a single group.
 
-#### Train the model
+#### Train model
 ```Python
 def fit(epochs, model, cost_fn, opt, dataloader):
     for i in range(epochs):
