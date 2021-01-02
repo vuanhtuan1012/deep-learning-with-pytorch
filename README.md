@@ -583,6 +583,12 @@ def forward(self, X):
 
 The target range is too large, so we perform scale down targets in `cost_func()` and scale up estimations in `predict()` with the same scale ratio to reduce the cost.
 ```Python
+def cost_func(self, batch):
+    X, Y = batch
+    Y_hat = self(X)
+    cost = F.mse_loss(Y_hat, scale_down(Y))
+    return cost
+
 def predict(self, X):
     Y_hat = self(X)
     return scale_up(Y_hat.detach())
