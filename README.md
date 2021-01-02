@@ -114,15 +114,13 @@ type(z)
 
 > Linear Regression supposes that there's a linear relation between inputs and outputs (targets).
 
-This section mentions how to train a linear regression model in PyTorch in two ways:
-- [from scratch](#linear-regression-from-scratch), functions are built manually.
-- [using PyTorch built-ins function](#linear-regression-using-pytorch-built-ins).
+This part mentions how to train a linear regression model in PyTorch in two ways:
+- [from scratch](#a-linear-regression-from-scratch), functions are built manually.
+- [using PyTorch built-ins function](#b-linear-regression-using-pytorch-built-ins).
 
-The notebook of this section is at [linear regression.ipynb](linear%20regression.ipynb).
+### A. Linear Regression from scratch
 
-### Linear Regression from scratch
-
-#### Workflow
+The figure below presents the workflow of this section.
 <p align="center">
 <img src="images/linear_regression_from_scratch.svg"/>
 </p>
@@ -135,13 +133,19 @@ The notebook of this section is at [linear regression.ipynb](linear%20regression
 :warning: Make sure reset gradients to zero before the next iteration.
 - [x] Predict: using optimal parameters to predict target from a given input.
 
-#### Convert inputs & targets to tensors
+#### Import libraries
+```Python
+import numpy as np
+import torch
+```
+
+#### 1. Prepare data
 ```Python
 X = torch.from_numpy(inputs)
 Y = torch.from_numpy(targets)
 ```
 
-#### Initialize parameters
+#### 2. Initialize parameters
 ```Python
 # get number of samples (m) and features (n)
 m, n = X.shape
@@ -156,7 +160,7 @@ b = torch.randn(a, requires_grad=True)  # bias
 - the function `torch.randn()` creates a tensor with the given shape with elements picked from a *normal distribution* with *mean 0* and *standard deviation 1*.
 - In steps after we will optimize parameters `W, b` by using gradient descent, so we will need to compute `dy/dW` and `dy/db`. That's why `W` and `b` are set `requires_grad=True`.
 
-#### Define functions
+#### 3. Define functions
 ##### Hypothesis function (model)
 Predicts `y` from `x` and parameters `W, b`.
 ```Python
@@ -177,7 +181,7 @@ def cost_fn(Y_hat, Y):
  - the function `torch.sum()`  returns the sum of all the elements in a tensor.
  - the method `numel()` returns the number of elements in a tensor.
 
-#### Train model
+#### 4. Train model
 :writing_hand: **Gradient Descent:** this algorithm repeats the process of adjusting the weights and biases using the gradients multiple times to reduce the loss.
 - Each iteration is called an **epoch**.
 
@@ -200,7 +204,7 @@ for i in range(epochs):
 - the function `torch.no_grad()` indicates to PyTorch that we shouldn't track, calculate, or modify gradients while updating parameters `W` and `b`
 - the method `grad.zero_()` resets the gradients to zero. As PyTorch accumulates gradients, we need to reset them before the next time we invoke  `backward()` on the loss.
 
-#### Predict
+#### 5. Predict
 ```Python
 x = torch.tensor([[75, 63, 44.]])
 y_hat = model(x)
@@ -209,9 +213,9 @@ print(y_hat.tolist())
 - the method `tolist()` converts a vector tensor in list
 - the method `item()` returns the value of a single tensor.
 
-### Linear Regression using PyTorch built-ins
+### B. Linear Regression using PyTorch built-ins
 
-#### Workflow
+The figure below presents the workflow of this section.
 <p align="center">
 <img src="images/linear_regression_pytorch_built_ins.svg"/>
 </p>
@@ -231,7 +235,7 @@ print(y_hat.tolist())
 :warning: Make sure reset gradients to zero before the next iteration.
 - [x] Predict: using optimal parameters to predict target from a given input.
 
-#### Libraries
+#### Import libraries
 ```Python
 import torch.nn as nn
 from torch.utils.data import TensorDataset
@@ -239,13 +243,15 @@ from torch.utils.data import DataLoader
 import torch.nn.functional as F
 ```
 
-#### Convert inputs & targets to tensors
+#### 1. Prepare data
+
+##### Convert inputs & targets to tensors
 ```Python
 X = torch.from_numpy(inputs)
 Y = torch.from_numpy(targets)
 ```
 
-#### Define dataset & data loader
+##### Define dataset & data loader
 ```Python
 dataset = TensorDataset(X, Y)
 batch_size = 5
@@ -265,7 +271,7 @@ for batch in dataloader:
 ```
 - **The idea of data loader** is that if the dataset is too big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each batch iteraton (`for batch in dataloader`), we only train samples in one batch. We need some (`len(dataset)/batch_size`) iterations to train the whole dataset.
 
-#### Define functions
+#### 2. Define functions
 ##### Hypothesis function (model)
 ```Python
 # get number of samples (m) and of features (n)
@@ -289,7 +295,7 @@ cost_fn = F.mse_loss
 ```
 - the function `mse_loss()` measures the element-wise mean squared error. It takes two obligatory inputs: *input* and *target* ([more detail](https://pytorch.org/docs/stable/nn.functional.html#mse-loss)).
 
-#### Define optimizer
+#### 3. Define optimizer
 
 Optimizer identifies the algorithm using to adjust model parameters.
 ```Python
@@ -298,7 +304,7 @@ opt = torch.optim.SGD(model.parameters(), lr=1e-5)  # use the algorithm stochast
 - the function `torch.optim.SGD` optimizes parameters which are passed in `model.parameters()` with the learning rate passed in the parameter `lr`.
 - `SGD` stands for *stochastic gradient descent*. The terms *stochastic* indicates that samples are selected in random batches instead of as a single group.
 
-#### Train model
+#### 4. Train model
 ```Python
 def fit(epochs, model, cost_fn, opt, dataloader):
     for i in range(epochs):
@@ -315,12 +321,14 @@ fit(100, model, cost_fn, opt, dataloader)
 - the optimizer method `step()` updates parameters (weights and bias).
 - the optimizer method `zero_grad()` resets the gradients to zero.
 
-#### Predict
+#### 5. Predict
 ```Python
 x = torch.tensor([[75, 63, 44.]])
 y_hat = model(x)
 print(y_hat.data)
 ```
+
+The complete code of this part is in the notebook [linear regression.ipynb](linear%20regression.ipynb).
 
 ## III. Logistic Regression
 
