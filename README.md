@@ -55,7 +55,7 @@ Given the training set <img src="https://render.githubusercontent.com/render/mat
 Given the training set <img src="https://render.githubusercontent.com/render/math?math=%28x%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29_%7Bi%3D1%7D%5Em">
 
 --->
-## PyTorch Basic
+## I. PyTorch Basic
 
 ### Tensor
 - Create a tensor
@@ -110,7 +110,7 @@ z = y.numpy()
 type(z)
 ```
 
-## Linear Regression
+## II. Linear Regression
 
 > Linear Regression supposes that there's a linear relation between inputs and outputs (targets).
 
@@ -322,25 +322,24 @@ y_hat = model(x)
 print(y_hat.data)
 ```
 
-## Logistic Regression
+## III. Logistic Regression
 
-This section mentions how to create an application to classify handwritten digits. We will use the famous [MNIST handwritten digit database](http://yann.lecun.com/exdb/mnist/) as our training dataset. It consists of 28 x 28 pixels grayscale images of handwritten digits (0 to 9) and labels for each image indicating which digit it represents.
-
-The notebook of this section is at [logistic regression.ipynb](logistic%20regression.ipynb).
+This part mentions how to train a model to classify handwritten digits. We will use the famous [MNIST handwritten digit database](http://yann.lecun.com/exdb/mnist/) as our training dataset. It consists of 28 x 28 pixels grayscale images of handwritten digits (0 to 9) and labels for each image indicating which digit it represents. The trained model is save to file after the training process.
 
 Here are some sample images from the dataset:
 <p align="center">
 <img src="images/mnist_samples.png"/>
+(image source: <a href="https://www.researchgate.net/publication/306056875_An_analysis_of_image_storage_systems_for_scalable_training_of_deep_neural_networks">researchgate.net</a>)
 </p>
 
-(image source: [researchgate.net](https://www.researchgate.net/publication/306056875_An_analysis_of_image_storage_systems_for_scalable_training_of_deep_neural_networks))
+> We suppose that there'are linear lines separating digit groups.
 
 ### Workflow
 <p align="center">
 <img src="images/logistic_regression.svg"/>
 </p>
 
-### Libararies
+### Import libraries
 ```Python
 import torch
 import torchvision
@@ -353,7 +352,9 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 ```
 
-### Convert train & test images to tensors
+### 1. Prepare data
+
+#### 1.1 Convert train & test images to tensors
 
 ```Python
 dataset = MNIST(root='data/', train=True, transform=transforms.ToTensor(), download=True)
@@ -362,7 +363,7 @@ test_ds = MNIST(root='data/', train=False, transform=transforms.ToTensor())
 - the first line will download images from [MNIST handwritten digit database](http://yann.lecun.com/exdb/mnist/) to the directory `data` and create a Pytorch `dataset`. This dataset contains 60 000 images. We will use this dataset to train the model.
 - the second line will create a Pytorch `dataset` containing 10 000 images. We use this dataset to evaluate models. We don't need to download images since they're already downloaded.
 
-### Split train images to train & validation sets
+#### 1.2 Split train images to train & validation sets
 ```Python
 data_size = len(dataset)
 train_size = round(data_size*0.8)
@@ -371,7 +372,7 @@ train_ds, val_ds = random_split(dataset, [train_size, val_size])
 ```
 - the PyTorch method `random_split` choose a random sample of size `val_size` for creating a validation dataset, and a random sample of size `train_size` for creating a training dataset. There's no ntersection sample of these two datasets.
 
-### Define batch size and dataloaders
+#### 1.3 Define batch size and dataloaders
 ```Python
 batch_size = 128
 train_loader = DataLoader(train_ds, batch_size, shuffle=True)
@@ -379,13 +380,13 @@ val_loader = DataLoader(val_ds, batch_size*2)
 test_loader = DataLoader(test_ds, batch_size*2)
 ```
 
-### Define functions
+### 2. Create model
 
-In this section we create four functions:
-- `forward()` is to compute linear outputs from tensor inputs. This output is used as input of other functions.
-- `predict()` is to predict label from a linear output.
-- `cost()` is to measure the difference between predicted and real label.
-- `evaluate()` is to evaluate model on validation dataset. It computes cost and accuracy.
+In this section we build a model class containing four methods:
+- `forward()` computes linear predictions of outputs from tensor inputs.
+- `predict()` predicts label from a linear predictions.
+- `cost_func()` measures the difference between predicted and real label.
+- `evaluate_batch()` evaluates a batch on two criteria: the cost and the accuracy.
 
 ```Python
 class MnistModel(nn.Module):
@@ -413,7 +414,7 @@ class MnistModel(nn.Module):
 
 ```Python
 # compute cost
-def cost(self, batch):
+def cost_func(self, batch):
     images, labels = batch
     Y_linear = self(images)
     cost = F.cross_entropy(Y_linear, labels)
@@ -423,7 +424,7 @@ def cost(self, batch):
 
 ```Python
 # evaluate a batch
-def evaluate(self, batch):
+def evaluate_batch(self, batch):
     images, labels = batch
     Y_hat = self.predict(images)
     acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
@@ -437,7 +438,17 @@ def evaluate(self, batch):
 ```
 - `torch.sum(Y_hat == labels)` computes the number of right prediction.
 
-### Training Phase
+### 3. Define optimizer
+
+We use gradient descent to adjust model parameters.
+```Python
+lr = 1e-3  # learning rate
+optimizer = torch.optim.SGD(model.parameters(), lr)
+```
+
+### 4. Train model
+
+#### 4.1. Training phase
 <p align="center">
 <img src="images/logistic_regression_training.svg"/>
 </p>
@@ -445,13 +456,13 @@ def evaluate(self, batch):
 ```Python
 # training phase
 for batch in train_loader:
-    cost = model.cost(batch)  # compute cost
+    cost = model.cost_func(batch)  # compute cost
     cost.backward()  # compute gradients
     optimizer.step()  # update parameters
     optimizer.zero_grad()  # reset gradients to zero
 ```
 
-### Validation Phase
+#### 4.2 Validation phase
 <p align="center">
 <img src="images/logistic_regression_validation.svg"/>
 </p>
@@ -471,7 +482,7 @@ def evaluate(self, batch):
     return log
 ```
 
-### Save model
+### 5. Save model
 ```Python
 filename = 'mnist_logistic.pth'
 torch.save(model.state_dict(), filename)
@@ -479,6 +490,9 @@ torch.save(model.state_dict(), filename)
 - the method `state_dict()` returns an `OrderedDict` containing all the weights and bias matrices mapped to the right attributes of the model.
 - to load the model we can instantiate a new object of the class `MnistModel` and use the method `load_state_dict()`
 ```Python
+# load model from file
 model2 = MnistModel(in_features, out_classes)
 model2.load_state_dict(torch.load(filename))
 ```
+
+The complete code of this part is in the notebook [logistic regression.ipynb](logistic%20regression.ipynb).
