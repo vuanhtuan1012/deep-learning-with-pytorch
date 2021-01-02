@@ -5,6 +5,7 @@ This is a summarization of the course [Deep Learning with PyTorch: Zero to GANs]
 1. [PyTorch Basic](#i-pytorch-basic): basic operators of PyTorch.
 2. [Linear Regression](#ii-linear-regression): train a linear regression from scratch and using PyTorch built-ins function.
 3. [Logistic Regression](#iii-logistic-regression): classify handwritten digits using MNIST handwritten digit database as training dataset.
+4. [Insurance Cost Prediction](#iv-insurance-cost-prediction): predict the price of yearly medical bills based on personal information.
 
 <!---
 ## Syllabus
@@ -507,3 +508,122 @@ model2.load_state_dict(torch.load(filename))
 ```
 
 The complete code of this part is in the notebook [logistic regression.ipynb](logistic%20regression.ipynb).
+
+## IV. Insurance Cost Prediction
+
+In this part, we're going to use information like a person's age, sex, BMI, number of children and smoking habit to **predict the price of yearly medical bills**. This kind of model is useful for insurance companies to determine the yearly insurance premium for a person.
+
+The dataset for this problem is taken from [Kaggle](https://www.kaggle.com/mirichoi0218/insurance).
+
+### Workflow
+
+The figure below presents the workflow of the training process.
+<p align="center">
+<img src="images/insurance_cost_prediction.svg">
+</p>
+
+- [x] Prepare data: dowload data in CSV file from the URL source, customize data, convert categorical data into numbers, convert numpy arrays to tensors, define datasets & data loaders, and explorer data.
+- [x] Create model: since the target is continuous, we'll use the linear regression model for this problem.
+- [x] Define optimizer: we'll use gradient descent to adjust model parameters.
+- [x] Train model: train model on training set and perform evaluation on validation set.
+- [x] Make predictions: carry out some predictions on validation set.
+
+### 1. Prepare data
+
+- Download data from URL source
+```Python
+DATASET_URL = "https://raw.githubusercontent.com/stedy/Machine-Learning-with-R-datasets/master/insurance.csv"
+DATA_FILENAME = "insurance.csv"
+download_url(DATASET_URL, '.')
+```
+- Customize data: create a particular data from the raw data. This is to test the ability of building a model that can works well with different range of features and large scale of targets.
+```Python
+rand_str = "anh-tuan"
+df = customize_data(df_raw, rand_str)
+df.head()
+```
+- Convert categorical data to numbers: since there'are categorical data in inputs, we need to convert them to numbers before training.
+```Python
+input_cols = ['age', 'sex', 'bmi', 'children', 'smoker']
+cat_cols = ['sex', 'smoker']
+output_cols = ['charges']
+
+inputs, targets = df_to_arrays(df, input_cols, cat_cols, output_cols)
+```
+- Convert numpy arrays to tensors: before converting numpy arrays to tensors, we need to make sure they are in the data type `float32`.
+```Python
+X = torch.from_numpy(inputs.astype('float32'))
+Y = torch.from_numpy(targets.astype('float32'))
+X.dtype, Y.dtype
+```
+- Define datasets & data loaders: split the dataset into training set & validation set, then create corresponding train loader & validation loader.
+```Python
+dataset = TensorDataset(X, Y)
+train_ds, val_ds = random_split(dataset, [train_size, val_size])
+train_loader = DataLoader(train_ds, batch_size*2, shuffle=True)
+val_loader = DataLoader(val_ds, batch_size)
+```
+- Explorer data: show brief statistics on inputs & targets.
+
+### 2. Create model
+
+In this section, we create a model class consisting of four methods:
+- `forward()`: estimates the output from the input.
+- `cost_func()`: computes the error of estimation.
+- `predict()`: predicts the output from the input.
+- `evaluate_batch()`: computes the error of the estimation of a batch.
+
+Based on statistics on inputs & targets we found that features are in different ranges, so it needs to perform feature normalization in the method `forward()`.
+```Python
+def forward(self, X):
+    X_norm = normalize_features(X)
+    Y_hat = self.linear(X_norm)
+    return Y_hat
+```
+
+The target range is too large, so we perform scale down targets in `cost_func()` and scale up estimations in `predict()` with the same scale ratio to reduce the cost.
+```Python
+def predict(self, X):
+    Y_hat = self(X)
+    return scale_up(Y_hat.detach())
+```
+
+### 3. Define optimizer
+
+Specifying gradient descent is used to adjust model parameters.
+```Python
+# define optimizer
+lr = 1e-2
+optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+```
+
+### 4. Train model
+
+- Optimize the model parameters on training set
+```Python
+for batch in train_loader:
+    cost = model.cost_func(batch)
+    cost.backward()  # compute gradients
+    optimizer.step()  # adjust model parameters
+    optimizer.zero_grad()  # reset gradients to zero
+```
+
+- Evaluate the effect of model on validation set
+```Python
+batch_logs = [model.evaluate_batch(batch) for batch in val_loader]
+epoch_log = evaluate_epoch(batch_logs)
+logs.append(epoch_log)
+```
+
+### 5. Make predictions
+
+Performing some estimations on validation set.
+```Python
+x, y = val_ds[0]
+yh = model.predict(x)
+cost = model.evaluate_batch((x, y))['cost']
+print("x = {}, y = {}".format(x.tolist(), round(y.item(),2)))
+print("- yh = {}\n- cost = {}".format(round(yh.item(),2), round(cost.item(),2)))
+```
+
+The complete code of this part is in the notebook [insurance cost prediction.ipynb](insurance%20cost%20prediction.ipynb).
