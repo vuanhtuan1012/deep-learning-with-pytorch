@@ -113,11 +113,11 @@ type(z)
 
 ## II. Linear Regression
 
-> Linear Regression supposes that there's a linear relation between inputs and outputs (targets).
-
-This part mentions how to train a linear regression model in PyTorch in two ways:
+This part mentions how to **train a linear regression model in PyTorch** in two ways:
 - [from scratch](#a-linear-regression-from-scratch), functions are built manually.
 - [using PyTorch built-ins function](#b-linear-regression-using-pytorch-built-ins).
+
+> Linear Regression supposes that there's a linear relation between inputs and outputs (targets).
 
 ### A. Linear Regression from scratch
 
@@ -333,7 +333,7 @@ The complete code of this part is in the notebook [linear regression.ipynb](line
 
 ## III. Logistic Regression
 
-This part mentions how to train a model to classify handwritten digits. We will use the famous [MNIST handwritten digit database](http://yann.lecun.com/exdb/mnist/) as our training dataset. It consists of 28 x 28 pixels grayscale images of handwritten digits (0 to 9) and labels for each image indicating which digit it represents. The trained model is save to file after the training process.
+This part mentions how to **train a model to classify handwritten digits**. We will use the famous [MNIST handwritten digit database](http://yann.lecun.com/exdb/mnist/) as our training dataset. It consists of 28 x 28 pixels grayscale images of handwritten digits (0 to 9) and labels for each image indicating which digit it represents. The trained model is save to file after the training process.
 
 Here are some sample images from the dataset:
 <p align="center">
