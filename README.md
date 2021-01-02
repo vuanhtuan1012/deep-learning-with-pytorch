@@ -2,9 +2,9 @@
 
 This is a summarization of the course [Deep Learning with PyTorch: Zero to GANs](https://jovian.ai/learn/deep-learning-with-pytorch-zero-to-gans) at Jovian.
 
-1. [PyTorch Basic](#pytorch-basic): basic operators of PyTorch.
-2. [Linear Regression](#linear-regression): train a linear regression from scratch and using PyTorch built-ins function.
-3. [Logistic Regression](#logistic-regression): classify handwritten digits using MNIST handwritten digit database as training dataset.
+1. [PyTorch Basic](#i-pytorch-basic): basic operators of PyTorch.
+2. [Linear Regression](#ii-linear-regression): train a linear regression from scratch and using PyTorch built-ins function.
+3. [Logistic Regression](#iii-logistic-regression): classify handwritten digits using MNIST handwritten digit database as training dataset.
 
 <!---
 ## Syllabus
@@ -329,6 +329,7 @@ This part mentions how to train a model to classify handwritten digits. We will 
 Here are some sample images from the dataset:
 <p align="center">
 <img src="images/mnist_samples.png"/>
+
 (image source: <a href="https://www.researchgate.net/publication/306056875_An_analysis_of_image_storage_systems_for_scalable_training_of_deep_neural_networks">researchgate.net</a>)
 </p>
 
@@ -469,7 +470,7 @@ for batch in train_loader:
 
 ```Python
 # evaluate a batch
-def evaluate(self, batch):
+def evaluate_batch(self, batch):
     images, labels = batch
     Y_hat = self.predict(images)
     acc = torch.sum(Y_hat == labels).item()/len(Y_hat)
