@@ -461,7 +461,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr)
 for batch in train_loader:
     cost = model.cost_func(batch)  # compute cost
     cost.backward()  # compute gradients
-    optimizer.step()  # update parameters
+    optimizer.step()  # adjust model parameters
     optimizer.zero_grad()  # reset gradients to zero
 ```
 
