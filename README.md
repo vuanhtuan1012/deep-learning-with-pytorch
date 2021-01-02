@@ -225,7 +225,7 @@ print(y_hat.tolist())
 - [x] Define functions:
     - identify the number of features and of targets, set model is a linear function.
     - set cost function is a mean squared loss function.
-- [x] Define optimizer: an optimizer is used to optimize model parameters by calling `step()` method. Set optimzer to use stochastic gradient descent algorithm.
+- [x] Define optimizer: identifies the algorithm using to adjust model parameters. Set optimzer to use stochastic gradient descent algorithm.
 - [x] Train model: find the *optimal values* of model parameters by repeating the process of optimizing.
 
 :warning: Make sure reset gradients to zero before the next iteration.
@@ -261,7 +261,7 @@ dataloader = DataLoader(dataset, batch_size, shuffle=True)
 for batch in dataloader:
     print(batch)
     xs, ys = batch
-    print(xs); print(ys)
+    print(xs.data); print(ys.data)
 ```
 - **The idea of data loader** is that if the dataset is too big it takes time to train the whole dataset multiple times. Therefore, instead of training whole dataset, we devide the dataset into batches and at each batch iteraton (`for batch in dataloader`), we only train samples in one batch. We need some (`len(dataset)/batch_size`) iterations to train the whole dataset.
 
@@ -290,8 +290,10 @@ cost_fn = F.mse_loss
 - the function `mse_loss()` measures the element-wise mean squared error. It takes two obligatory inputs: *input* and *target* ([more detail](https://pytorch.org/docs/stable/nn.functional.html#mse-loss)).
 
 #### Define optimizer
+
+Optimizer identifies the algorithm using to adjust model parameters.
 ```Python
-opt = torch.optim.SGD(model.parameters(), lr=1e-5)
+opt = torch.optim.SGD(model.parameters(), lr=1e-5)  # use the algorithm stochastic gradient descent
 ```
 - the function `torch.optim.SGD` optimizes parameters which are passed in `model.parameters()` with the learning rate passed in the parameter `lr`.
 - `SGD` stands for *stochastic gradient descent*. The terms *stochastic* indicates that samples are selected in random batches instead of as a single group.
@@ -305,7 +307,7 @@ def fit(epochs, model, cost_fn, opt, dataloader):
             ys_hat = model(xs)
             cost = cost_fn(ys_hat, ys)
             cost.backward()
-            opt.step()  # update parameters
+            opt.step()  # adjust model parameters
             opt.zero_grad()  # reset gradients to zero
 
 fit(100, model, cost_fn, opt, dataloader)
@@ -317,7 +319,7 @@ fit(100, model, cost_fn, opt, dataloader)
 ```Python
 x = torch.tensor([[75, 63, 44.]])
 y_hat = model(x)
-print(y_hat.tolist())
+print(y_hat.data)
 ```
 
 ## Logistic Regression
