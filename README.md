@@ -329,7 +329,9 @@ This part mentions how to train a model to classify handwritten digits. We will 
 Here are some sample images from the dataset:
 <p align="center">
 <img src="images/mnist_samples.png"/>
+</p>
 
+<p align="center">
 (image source: <a href="https://www.researchgate.net/publication/306056875_An_analysis_of_image_storage_systems_for_scalable_training_of_deep_neural_networks">researchgate.net</a>)
 </p>
 
