@@ -1,7 +1,7 @@
 # Deep Learning with PyTorch: Zero to GANs
 
 - [Lesson 1](#lesson-1---pytorch-basics-and-gradient-descent): PyTorch Basics and Gradient Descent
-- [Assignment 1](#assignment-1---all-about-torchtensor): All About torch.Tensor
+- [Assignment 1](#assignment-1---all-about-torchtensor): All About `torch.Tensor`
 - [Lesson 2](#lesson-2---working-with-images-and-logistic-regression): Working with Images and Logistic Regression
 - [Assignment 2](#assignment-2---train-your-first-model): Train Your First Model
 - [Lesson 3](#lesson-3---training-deep-neural-networks-on-a-gpu): Training Deep Neural Networks on a GPU
@@ -17,8 +17,7 @@
 
 For the course project, you will pick a dataset of your choice and apply the concepts learned in this course to train deep learning models end-to-end with PyTorch, experimenting with different hyperparameters & metrics.
 
-Find a dataset online (see the [Where to Find Datasets](#where-to-find-datasets) section below)
-
+- Find a dataset online (see the [Where to Find Datasets](#where-to-find-datasets) section below)
 - Understand and describe the modeling objective clearly
 - What type of data is it? (images, text, audio, etc.)
 - What type of problem is it? (regression, classification, generative modeling, etc.)
@@ -51,7 +50,7 @@ General sources
 - https://www.kaggle.com/datasets (use the opendatasets library for downloading datasets)
 - https://course.fast.ai/datasets
 - https://github.com/ChristosChristofidis/awesome-deep-learning#datasets
-- https://www.kaggle.com/competitions (check the "Completed" tab)
+- https://www.kaggle.com/competitions (check the **Completed** tab)
 - https://www.analyticsvidhya.com/blog/2018/03/comprehensive-collection-deep-learning-datasets/
 - https://lionbridge.ai/datasets/top-10-image-classification-datasets-for-machine-learning/
 - https://archive.ics.uci.edu/ml/index.php
