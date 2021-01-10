@@ -10,6 +10,8 @@
 - [Lesson 5](#lesson-5---data-augmentation-regularization--resnets): Data Augmentation, Regularization & ResNets
 - [Lesson 6](#lesson-6---generative-adversarial-networks-and-transfer-learning): Generative Adversarial Networks and Transfer Learning
 - [Course Project](#course-project---train-a-deep-learning-model-from-scratch): Train a Deep Learning Model from Scratch
+    - [Example notebooks](#example-notebooks-for-reference)
+    - [Where to find datasets](#where-to-find-datasets)
 
 ## Course Project - Train a Deep Learning Model from Scratch
 
@@ -34,7 +36,7 @@ Find a dataset online (see the [Where to Find Datasets](#where-to-find-datasets)
 - Publish and submit your Jupyter notebook
 - (Optional) Write a blog post to describe your experiments and summarize your work. Use Medium or Github pages.
 
-Note: There is no starter notebook for the course project. Please use the "New Notebook" button on Jovian to create a new notebook, "Run on Colab" to execute it, and "jovian.commit" to record versions.
+Note: There is no starter notebook for the course project. Please use the **New Notebook** button on Jovian to create a new notebook, **Run on Colab** to execute it, and `jovian.commit` to record versions.
 
 ### Example notebooks for reference:
 
