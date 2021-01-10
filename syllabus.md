@@ -1,10 +1,21 @@
 # Deep Learning with PyTorch: Zero to GANs
 
+- [Lesson 1](#lesson-1---pytorch-basics-and-gradient-descent): PyTorch Basics and Gradient Descent
+- [Assignment 1](#assignment-1---all-about-torchtensor): All About torch.Tensor
+- [Lesson 2](#lesson-2---working-with-images-and-logistic-regression): Working with Images and Logistic Regression
+- [Assignment 2](#assignment-2---train-your-first-model): Train Your First Model
+- [Lesson 3](#lesson-3---training-deep-neural-networks-on-a-gpu): Training Deep Neural Networks on a GPU
+- [Assignment 3](#assignment-3---feed-forward-neural-networks): Feed Forward Neural Networks
+- [Lesson 4](#lesson-4---image-classification-with-convolutional-neural-networks): Image Classification with Convolutional Neural Networks
+- [Lesson 5](#lesson-5---data-augmentation-regularization--resnets): Data Augmentation, Regularization & ResNets
+- [Lesson 6](#lesson-6---generative-adversarial-networks-and-transfer-learning): Generative Adversarial Networks and Transfer Learning
+- [Course Project](#course-project---train-a-deep-learning-model-from-scratch): Train a Deep Learning Model from Scratch
+
 ## Course Project - Train a Deep Learning Model from Scratch
 
 For the course project, you will pick a dataset of your choice and apply the concepts learned in this course to train deep learning models end-to-end with PyTorch, experimenting with different hyperparameters & metrics.
 
-Find a dataset online (see the "Where to Find Datasets" section below)
+Find a dataset online (see the [Where to Find Datasets](#where-to-find-datasets) section below)
 
 - Understand and describe the modeling objective clearly
 - What type of data is it? (images, text, audio, etc.)
@@ -27,144 +38,116 @@ Note: There is no starter notebook for the course project. Please use the "New N
 
 ### Example notebooks for reference:
 
-https://jovian.ai/aakashns/simple-cnn-starter
-https://jovian.ai/aakashns/transfer-learning-pytorch
-https://jovian.ai/aakashns/06b-anime-dcgan
-https://jovian.ai/aakashns/05b-cifar10-resnet
+- https://jovian.ai/aakashns/simple-cnn-starter
+- https://jovian.ai/aakashns/transfer-learning-pytorch
+- https://jovian.ai/aakashns/06b-anime-dcgan
+- https://jovian.ai/aakashns/05b-cifar10-resnet
 
 ### Where to Find Datasets
 
-General sources:
-
-https://www.kaggle.com/datasets (use the opendatasets library for downloading datasets)
-https://course.fast.ai/datasets
-https://github.com/ChristosChristofidis/awesome-deep-learning#datasets
-https://www.kaggle.com/competitions (check the "Completed" tab)
-https://www.analyticsvidhya.com/blog/2018/03/comprehensive-collection-deep-learning-datasets/
-https://lionbridge.ai/datasets/top-10-image-classification-datasets-for-machine-learning/
-https://archive.ics.uci.edu/ml/index.php
-https://github.com/awesomedata/awesome-public-datasets
-https://datasetsearch.research.google.com/
+General sources
+- https://www.kaggle.com/datasets (use the opendatasets library for downloading datasets)
+- https://course.fast.ai/datasets
+- https://github.com/ChristosChristofidis/awesome-deep-learning#datasets
+- https://www.kaggle.com/competitions (check the "Completed" tab)
+- https://www.analyticsvidhya.com/blog/2018/03/comprehensive-collection-deep-learning-datasets/
+- https://lionbridge.ai/datasets/top-10-image-classification-datasets-for-machine-learning/
+- https://archive.ics.uci.edu/ml/index.php
+- https://github.com/awesomedata/awesome-public-datasets
+- https://datasetsearch.research.google.com/
 
 Indian stocks data
-
-https://nsepy.xyz/
-https://nsetools.readthedocs.io/en/latest/usage.html
-https://www.kaggle.com/rohanrao/nifty50-stock-market-data
+- https://nsepy.xyz/
+- https://nsetools.readthedocs.io/en/latest/usage.html
+- https://www.kaggle.com/rohanrao/nifty50-stock-market-data
 
 Indian Air Quality Data
-
-https://www.kaggle.com/rohanrao/air-quality-data-in-india
+- https://www.kaggle.com/rohanrao/air-quality-data-in-india
 
 Indian Covid-19 Dataset
-
-https://api.covid19india.org/
+- https://api.covid19india.org/
 
 World Covid-19 Dataset
-
-https://www.kaggle.com/imdevskp/corona-virus-report
+- https://www.kaggle.com/imdevskp/corona-virus-report
 
 USA Covid-19 Dataset
-
-https://www.kaggle.com/sudalairajkumar/covid19-in-usa
+- https://www.kaggle.com/sudalairajkumar/covid19-in-usa
 
 Megapixels Dataset for Face Detection, GANs, Human Localization
-
-https://megapixels.cc/datasets/ (Contains 7 different datasets)
+- https://megapixels.cc/datasets/ (Contains 7 different datasets)
 
 Agriculture based dataset
-
-https://www.kaggle.com/srinivas1/agricuture-crops-production-in-india
-https://www.kaggle.com/unitednations/global-food-agriculture-statistics
-https://www.kaggle.com/kianwee/agricultural-raw-material-prices-19902020
-https://www.kaggle.com/jmullan/agricultural-land-values-19972017
+- https://www.kaggle.com/srinivas1/agricuture-crops-production-in-india
+- https://www.kaggle.com/unitednations/global-food-agriculture-statistics
+- https://www.kaggle.com/kianwee/agricultural-raw-material-prices-19902020
+- https://www.kaggle.com/jmullan/agricultural-land-values-19972017
 
 India Digital Payments UPI
-
-https://www.kaggle.com/lazycipher/upi-usage-statistics-aug16-to-feb20
+- https://www.kaggle.com/lazycipher/upi-usage-statistics-aug16-to-feb20
 
 India Consumption of LPG
-
-https://community.data.gov.in/domestic-consumption-of-liquefied-petroleum-gas-from-2011-12-to-2017-18/
+- https://community.data.gov.in/domestic-consumption-of-liquefied-petroleum-gas-from-2011-12-to-2017-18/
 
 India Import/Export Crude OIl
-
-https://community.data.gov.in/total-import-v-s-export-of-crude-oil-petroleum-products-by-india-from-2011-12-to-2017-18/
+- https://community.data.gov.in/total-import-v-s-export-of-crude-oil-petroleum-products-by-india-from-2011-12-to-2017-18/
 
 US Unemployment Rate Data
-
-https://www.kaggle.com/jayrav13/unemployment-by-county-us
+- https://www.kaggle.com/jayrav13/unemployment-by-county-us
 
 India Road accident Data
-
-https://community.data.gov.in/statistics-of-road-accidents-in-india/
+- https://community.data.gov.in/statistics-of-road-accidents-in-india/
 
 Data science Jobs Data
-
-https://www.kaggle.com/sl6149/data-scientist-job-market-in-the-us
-https://www.kaggle.com/jonatancr/data-science-jobs-around-the-world
-https://www.kaggle.com/rkb0023/glassdoor-data-science-jobs
+- https://www.kaggle.com/sl6149/data-scientist-job-market-in-the-us
+- https://www.kaggle.com/jonatancr/data-science-jobs-around-the-world
+- https://www.kaggle.com/rkb0023/glassdoor-data-science-jobs
 
 H1-b Visa Data
-
-https://www.kaggle.com/nsharan/h-1b-visa
+- https://www.kaggle.com/nsharan/h-1b-visa
 
 Donald Trump’s Tweets
-
-https://www.kaggle.com/austinreese/trump-tweets
+- https://www.kaggle.com/austinreese/trump-tweets
 
 Hilary Clinton and Trump’s Tweets
-
-https://www.kaggle.com/benhamner/clinton-trump-tweets
+- https://www.kaggle.com/benhamner/clinton-trump-tweets
 
 Asteroid Dataset
-
-https://www.kaggle.com/sakhawat18/asteroid-dataset
+- https://www.kaggle.com/sakhawat18/asteroid-dataset
 
 Solar flares Data
-
-https://www.kaggle.com/khsamaha/solar-flares-rhessi
+- https://www.kaggle.com/khsamaha/solar-flares-rhessi
 
 Human face generation GANs
-
-https://www.kaggle.com/arnaud58/flickrfaceshq-dataset-ffhq
+- https://www.kaggle.com/arnaud58/flickrfaceshq-dataset-ffhq
 
 F-1 Race Data
-
-https://www.kaggle.com/cjgdev/formula-1-race-data-19502017
+- https://www.kaggle.com/cjgdev/formula-1-race-data-19502017
 
 Automobile Insurance
-
-https://www.kaggle.com/aashishjhamtani/automobile-insurance
+- https://www.kaggle.com/aashishjhamtani/automobile-insurance
 
 PUBG
-
-https://www.kaggle.com/skihikingkevin/pubg-match-deaths?
+- https://www.kaggle.com/skihikingkevin/pubg-match-deaths?
 
 CS GO
-
-https://www.kaggle.com/mateusdmachado/csgo-professional-matches
-https://www.kaggle.com/skihikingkevin/csgo-matchmaking-damage
+- https://www.kaggle.com/mateusdmachado/csgo-professional-matches
+- https://www.kaggle.com/skihikingkevin/csgo-matchmaking-damage
 
 Dota 2
-
-https://www.kaggle.com/devinanzelmo/dota-2-matches
+- https://www.kaggle.com/devinanzelmo/dota-2-matches
 
 Cricket
-
-https://www.kaggle.com/nowke9/ipldata
-https://www.kaggle.com/jaykay12/odi-cricket-matches-19712017
+- https://www.kaggle.com/nowke9/ipldata
+- https://www.kaggle.com/jaykay12/odi-cricket-matches-19712017
 
 Basketball
-
-https://www.kaggle.com/ncaa/ncaa-basketball
-https://www.kaggle.com/drgilermo/nba-players-stats
+- https://www.kaggle.com/ncaa/ncaa-basketball
+- https://www.kaggle.com/drgilermo/nba-players-stats
 
 Football
-
-https://www.kaggle.com/martj42/international-football-results-from-1872-to-2017
-https://www.kaggle.com/abecklas/fifa-world-cup
-https://www.kaggle.com/egadharmawan/uefa-champion-league-final-all-season-19552019
+- https://www.kaggle.com/martj42/international-football-results-from-1872-to-2017
+- https://www.kaggle.com/abecklas/fifa-world-cup
+- https://www.kaggle.com/egadharmawan/uefa-champion-league-final-all-season-19552019
 
 ## Lesson 6: Generative Adversarial Networks and Transfer Learning
 
