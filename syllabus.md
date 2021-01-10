@@ -149,7 +149,7 @@ Football
 - https://www.kaggle.com/abecklas/fifa-world-cup
 - https://www.kaggle.com/egadharmawan/uefa-champion-league-final-all-season-19552019
 
-## Lesson 6: Generative Adversarial Networks and Transfer Learning
+## Lesson 6 - Generative Adversarial Networks and Transfer Learning
 
 https://www.youtube.com/watch?v=QpR4QEv5Urk
 
