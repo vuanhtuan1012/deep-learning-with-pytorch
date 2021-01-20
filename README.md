@@ -604,3 +604,94 @@ print("- yh = {}\n- cost = {}".format(round(yh.item(),2), round(cost.item(),2)))
 ```
 
 The complete code of this part is in the notebook [insurance cost prediction.ipynb](insurance%20cost%20prediction.ipynb).
+
+## V. Train Deep Neural Networks on a GPU
+
+In this part, we're going to build a neural network of three layers (input layer, output layer, and a hidden layer) to identify handwritten digits from [MNIST dataset](http://yann.lecun.com/exdb/mnist/). We also use GPU to train our models if available.
+
+<p align="center">
+<img src="images/neural_network.svg">
+</p>
+
+The workflow to predict output class from input units is presented in the figure below.
+
+<p align="center">
+<img src="images/neural_network_workflow.svg">
+</p>
+
+1.  Input units are passed to a activation function to compute activation units of the hidden layer. In this problem, we choose RELU (Rectified Linear Unit) function as activation function.
+2.  Activation units are passed to a linear function to compute the linear predictions. These values then passed to softmax function to calculate probabilities belonging to output classes. The class having maximal probability will be considered as the prediction.
+
+:warning: **NOTE:**
+-   If we choose a linear function as activation function, the neural network will become the logistic regression since the combination of two linear functions is a linear function.
+-   RELU is a non-linear function.  relu(x)=max(0,x)
+-   Softmax function rescales an n-dimensional value so that its elements lie in the range  [0, 1]  and sum to 1.
+
+The code of this part is similar to the one in the part [Logistic Regression](#iii-logistic-regression), except two methods `__init__()` and `forward()` of the class `MnistModel`.
+
+```Python
+def __init__(self, in_features:int, hidden_size:int,
+             out_classes:int):
+    super().__init__()
+    self.linear1 = nn.Linear(in_features, hidden_size)
+    self.linear2 = nn.Linear(hidden_size, out_classes)
+
+def forward(self, X:torch.tensor) -> torch.tensor:
+    # flatten image(s)
+    X = X.reshape(-1, self.linear1.in_features)
+    # compute activation units
+    Z = self.linear1(X)
+    A = F.relu(Z)
+    # compute probabilities
+    Y_linear = self.linear2(A)
+    return Y_linear
+```
+
+As the sizes of our models and datasets increase, we need to use GPUs to train our models within a reasonable amount of time. GPUs contain hundreds of cores optimized for performing expensive matrix operations on floating-point numbers quickly, making them ideal for training deep neural networks.
+
+```Python
+def getDefaultDevice():
+    """Pick GPU if available, else CPU
+    """
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    return torch.device("cpu")
+
+
+def toDevice(data, device:torch.device):
+    """Move tensor(s) to chosen device
+
+    Args:
+        device (torch.device): device to move tensor(s) to
+    """
+    if isinstance(data, (list, tuple)):
+        return [toDevice(x, device) for x in data]
+    return data.to(device, non_blocking=True)
+
+class DeviceDataLoader():
+    """This class is to wrap data loader and move batches of data
+    to the selected device
+    """
+    def __init__(self, dataloader:DataLoader, device:torch.device):
+        self.dataloader = dataloader
+        self.device = device
+
+    def __iter__(self):
+        """This method is to retrieve batches of data
+        """
+        for batch in self.dataloader:
+            yield toDevice(batch, self.device)
+
+    def __len__(self):
+        """This method is to get the number of batches
+        """
+        return len(self.dataloader)
+```
+
+```Python
+device = getDefaultDevice()
+train_loader = DeviceDataLoader(train_loader, device)
+val_loader = DeviceDataLoader(val_loader, device)
+```
+
+The complete code of this part is in the notebook [deep neural networks with gpu.ipynb](deep%20neural%20networks%20with%20gpu.ipynb).
