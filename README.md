@@ -695,4 +695,6 @@ train_loader = DeviceDataLoader(train_loader, device)
 val_loader = DeviceDataLoader(val_loader, device)
 ```
 
+The evaluation on test set shows that this neural network gives a little better result in comparison with logistic regression (accuracy = 0.96 vs 0.92).
+
 The complete code of this part is in the notebook [deep neural networks with gpu.ipynb](deep%20neural%20networks%20with%20gpu.ipynb).
