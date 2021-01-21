@@ -625,8 +625,8 @@ The workflow to predict output class from input units is presented in the figure
 
 :warning: **NOTE:**
 -   If we choose a linear function as activation function, the neural network will become the logistic regression since the combination of two linear functions is a linear function.
--   RELU is a non-linear function.  relu(x)=max(0,x)
--   Softmax function rescales an n-dimensional value so that its elements lie in the range  [0, 1]  and sum to 1.
+-   [RELU](https://pytorch.org/docs/stable/generated/torch.nn.ReLU.html) is a non-linear function. By using RELU function as the activation function, we suppose that for each input certain activation units are activated (those with non-zero values) while others turned off (those with zero values).
+-   [Softmax function](https://pytorch.org/docs/stable/generated/torch.nn.Softmax.html) rescales an n-dimensional value so that its elements lie in the range [0, 1] and sum to 1.
 
 The code of this part is similar to the one in the part [Logistic Regression](#iii-logistic-regression), except two methods `__init__()` and `forward()` of the class `MnistModel`.
 
@@ -688,6 +688,8 @@ class DeviceDataLoader():
         """
         return len(self.dataloader)
 ```
+
+Move model, data loaders to chosen device.
 
 ```Python
 device = getDefaultDevice()
