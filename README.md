@@ -691,6 +691,7 @@ class DeviceDataLoader():
 
 ```Python
 device = getDefaultDevice()
+toDevice(model, device)
 train_loader = DeviceDataLoader(train_loader, device)
 val_loader = DeviceDataLoader(val_loader, device)
 ```
