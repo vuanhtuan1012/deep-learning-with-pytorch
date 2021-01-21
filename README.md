@@ -701,3 +701,55 @@ val_loader = DeviceDataLoader(val_loader, device)
 The evaluation on test set shows that this neural network gives a little better result in comparison with [logistic regression](logistic%20regression.ipynb) (accuracy = 0.95 vs 0.92).
 
 The complete code of this part is in the notebook [deep neural networks with gpu.ipynb](deep%20neural%20networks%20with%20gpu.ipynb).
+
+## VI. Classifying Images of Everyday Objects
+
+In this part, we'll build a neural networks with many hidden layers to classify images of [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) dataset. This dataset consists of 60,000 32x32 colour images in 10 classes, with 6,000 images per class. There are 50,000 training images and 10,000 test images.
+
+The whole process of classifying is similar to the one of [Training Deep Neural Networks on a GPU](#v-train-deep-neural-networks-on-a-gpu), except that the neural network class `Cifar10Model` has dynamique hidden layers, the number of hidden layers depends on the given hidden sizes.
+
+We also use GPU to train model if available.
+
+<p align="center">
+<img src="images/cifar10.svg">
+</p>
+
+```Python
+class Cifar10Model(nn.Module):
+    def __init__(self, in_features:int, out_classes:int,
+                 hidden_sizes:list):
+        super().__init__()
+        self.linear1 = nn.Linear(in_features, hidden_sizes[0])
+        self.nb_hidden_layers = len(hidden_sizes)
+        for i in range(self.nb_hidden_layers):
+            func_name = "linear%s" % (i+2)
+            if i+1 == self.nb_hidden_layers:
+                func = nn.Linear(hidden_sizes[i], out_classes)
+            else:
+                func = nn.Linear(hidden_sizes[i], hidden_sizes[i+1])
+            setattr(self, func_name, func)
+
+    def forward(self, X:torch.tensor) -> torch.tensor:
+        """Compute linear prediction of image(s)
+
+        Args:
+            X (torch.tensor): input image(s)
+
+        Returns:
+            torch.tensor: linear prediction of image(s)
+        """
+        # flatten image
+        X = X.reshape(-1, self.linear1.in_features)
+        # compute activation units of hidden layers
+        A = X
+        for i in range(self.nb_hidden_layers):
+            func = getattr(self, "linear%s" % (i+1))
+            Z = func(A)
+            A = F.relu(Z)
+        # compute linear prediction
+        func = getattr(self, "linear%s" % (self.nb_hidden_layers+1))
+        Y_linear = func(A)
+        return Y_linear
+```
+
+The complete code of this part is in the notebook [classifying images of everyday objects.ipynb](classifying%20images%20of%20everyday%20objects.ipynb).
