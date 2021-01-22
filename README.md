@@ -4,9 +4,9 @@ This is a summarization of the course [Deep Learning with PyTorch: Zero to GANs]
 
 1. [PyTorch Basic](#i-pytorch-basic): basic operators of PyTorch.
 2. [Linear Regression](#ii-linear-regression): train a linear regression from scratch and using PyTorch built-ins function.
-3. [Logistic Regression](#iii-logistic-regression): classify handwritten digits using MNIST handwritten digit database as training dataset.
+3. [Logistic Regression](#iii-logistic-regression): classify handwritten digits using [MNIST](http://yann.lecun.com/exdb/mnist/) handwritten digit database as training dataset.
 4. [Insurance Cost Prediction](#iv-insurance-cost-prediction): predict the price of yearly medical bills based on personal information.
-5. [Training Deep Neural Networks on a GPU](#v-train-deep-neural-networks-on-a-gpu): identify handwritten digits from MNIST dataset by using a neural network.
+5. [Training Deep Neural Networks on a GPU](#v-train-deep-neural-networks-on-a-gpu): identify handwritten digits from [MNIST](http://yann.lecun.com/exdb/mnist/) dataset by using a neural network.
 6. [Classifying Images of Everyday Objects](#vi-classifying-images-of-everyday-objects): build a neural network multi hidden layers to classify images of objects using [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) dataset.
 
 <!---
