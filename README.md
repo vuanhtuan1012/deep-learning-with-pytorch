@@ -29,6 +29,12 @@ Given the training set <img src="https://render.githubusercontent.com/render/mat
 Given the training set <img src="https://render.githubusercontent.com/render/math?math=%28x%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29_%7Bi%3D1%7D%5Em">
 
 --->
+## Certificate
+
+![enter image description here](images/certificate.png)
+
+[Completion Certificate for JovianML's Deep Learning with PyTorch: Zero to GANs](https://jovian.ai/certificate/MFQTIMZRHA)
+
 ## I. PyTorch Basic
 
 ### Tensor
